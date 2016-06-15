@@ -1,0 +1,3 @@
+[submodule "atf-fields"]
+	path = atf-fields
+	url = https://github.com/EugenBobrowski/atf-fields.git
