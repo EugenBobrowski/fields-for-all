@@ -11,3 +11,17 @@ Author: Eugen Bobrowski
 Version: 1.0
 Author URI: http://atf.li
 */
+
+/**
+ * ATF Options
+ */
+include_once 'options/options.php';
+
+/**
+ * Woocommerce tabs
+ */
+
+if (is_admin() && in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) && (!defined('DOING_AJAX') || !DOING_AJAX)) {
+    include_once 'woo-tabs/woo-tabs.php';
+    add_action('after_setup_theme', array('Woo_Product_Data_Fields', 'get_instance'));
+}
