@@ -25,3 +25,15 @@ if (is_admin() && in_array('woocommerce/woocommerce.php', apply_filters('active_
     include_once 'woo-tabs/woo-tabs.php';
     add_action('after_setup_theme', array('Woo_Product_Data_Fields', 'get_instance'));
 }
+
+/**
+ * Termsmeta
+ */
+include_once 'termmeta/terms-meta.php';
+add_action('after_setup_theme', array('Fields_For_Terms', 'get_instance'));
+//Fields_For_Terms::get_instance();
+
+/**
+ * Atf Metaboxes
+ */
+include_once 'metaboxes/atf-metabox.php';
