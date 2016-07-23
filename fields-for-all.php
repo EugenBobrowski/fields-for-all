@@ -1,7 +1,7 @@
 <?php
 /**
  * @package Fields_For_All
- * @version 1.6
+ * @version 1.0
  */
 /*
 Plugin Name: Fields For All

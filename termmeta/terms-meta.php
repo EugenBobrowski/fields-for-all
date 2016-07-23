@@ -31,15 +31,25 @@ class Fields_For_Terms
         require_once plugin_dir_path(__FILE__) . '../atf-fields/htmlhelper.php';
         AtfHtmlHelper::assets('f4a-' . $taxonomy);
         foreach ($this->fields[$taxonomy] as $id => $field) {
-            $field['id'] = $id;
-            $field['name'] = $id;
-            ?>
-            <div class="form-field term-group atf-fields">
-                <label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
+            switch ($field['type']) {
+                case 'title':
+                    echo '<h4>' . $field['title'] . '</h4>';
+                    break;
+                default:
+                    $field['id'] = $id;
+                    $field['name'] = $id;
+                    ?>
+                    <div class="form-field term-group atf-fields">
+                        <label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
 
-                <?php AtfHtmlHelper::$field['type']($field); ?>
-            </div>
-        <?php }
+                        <?php AtfHtmlHelper::$field['type']($field); ?>
+                    </div>
+                    <?php
+                    break;
+            }
+
+
+        }
     }
 
     public function edit_term_fields($term, $taxonomy)
@@ -48,19 +58,38 @@ class Fields_For_Terms
         AtfHtmlHelper::assets('f4a-' . $taxonomy);
 
         foreach ($this->fields[$taxonomy] as $id => $field) {
-            $field['id'] = $id;
-            $field['name'] = $id;
-            $field['value'] = get_term_meta($term->term_id, $id, true);
+            switch ($field['type']) {
+                case 'title':
+                    ?>
+                    <tr class="form-field term-group-wrap atf-fields">
+                        <th scope="row" colspan="2">
+                            <h3><?php echo $field['title'];?></h3>
+                        </th>
 
 
-            ?>
-            <tr class="form-field term-group-wrap atf-fields">
-                <th scope="row"><label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label></th>
-                <td><?php AtfHtmlHelper::$field['type']($field); ?></td>
+                    </tr>
+                    <?php
+                    echo '<h4>' . $field['title'] . '</h4>';
+                    break;
+                default:
+                    $field['id'] = $id;
+                    $field['name'] = $id;
+                    $field['value'] = get_term_meta($term->term_id, $id, true);
+
+                    ?>
+                    <tr class="form-field term-group-wrap atf-fields">
+                        <th scope="row"><label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
+                        </th>
+                        <td><?php AtfHtmlHelper::$field['type']($field); ?></td>
 
 
-            </tr>
-        <?php }
+                    </tr>
+                    <?php
+                    break;
+            }
+
+
+        }
     }
 
     public function save_term_meta($term_id, $tt_id, $taxonomy)
