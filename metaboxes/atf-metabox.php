@@ -38,10 +38,14 @@ class Atf_Metabox
 
 	public function init()
 	{
-		include_once plugin_dir_path(__FILE__) . '../atf-fields/htmlhelper.php';
-		add_action('admin_enqueue_scripts', array('AtfHtmlHelper', 'assets'));
+
+		add_action('admin_enqueue_scripts', array($this, 'assets'));
 		add_action('add_meta_boxes', array($this, 'add_metabox'));
 		add_action('save_post', array($this, 'metabox_save'));
+	}
+	public function assets ($prefix) {
+		include_once plugin_dir_path(__FILE__) . '../atf-fields/htmlhelper.php';
+		AtfHtmlHelper::assets($prefix . '__f4a-metabox');
 	}
 
 	public function add_metabox()
@@ -51,13 +55,6 @@ class Atf_Metabox
 
 	public function metabox_callback($post)
 	{
-
-		$templates = apply_filters('si_templates', array());
-
-		$templates_opts = array();
-		foreach ($templates as $id => $tmpl) {
-			$templates_opts[$id] = '<img src="' . $tmpl['preview'] . '" width="150" height="200"/><br />' . $tmpl['name'];
-		}
 
 		wp_nonce_field(plugin_basename(__FILE__), $this->id . '_nonce');
 
@@ -98,7 +95,7 @@ class Atf_Metabox
 
 	public function metabox_save($post_id)
 	{
-
+		include_once plugin_dir_path(__FILE__) . '../atf-fields/htmlhelper.php';
 
 		if (!isset($_POST[$this->id . '_nonce']))
 			return $post_id;
@@ -123,9 +120,8 @@ class Atf_Metabox
 		$data2save = array();
 
 		foreach ($this->fields as $key => $field) {
-			$data2save[$key] = sanitize_atf_fields($_POST[$key], $field['type']);
+			$data2save[$key] = sanitize_atf_fields($_POST[$key], $field);
 		}
-
 		update_post_meta($post_id, $this->id, $data2save);
 
 		return true;
