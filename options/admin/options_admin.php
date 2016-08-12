@@ -55,6 +55,7 @@ class AtfOptionsAdmin {
 
 	public function add_plugin_admin_menu() {
 		$this->optionsArray = get_options_array();
+        if (!is_array($this->optionsArray) || empty($this->optionsArray)) return;
 		$this->plugin_screen_hook_suffix = add_menu_page(
 			__('Theme Options', 'atf'),
 			__('Theme Options', 'atf'),
