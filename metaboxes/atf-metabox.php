@@ -60,36 +60,7 @@ class Atf_Metabox
 
 		$data = get_post_meta($post->ID, $this->id, true);
 
-		?>
-
-		<table class="form-table atf-fields">
-			<tbody>
-			<?php
-			foreach ($this->fields as $key => $field) {
-				$field['id'] = $key;
-				$field['name'] = $key;
-				$field['default'] = (isset ($field['default'])) ? $field['default'] : '';
-				$field['value'] = (isset ($data[$key])) ? $data[$key] : $field['default'];
-
-
-				?>
-				<tr>
-					<th scope="row">
-						<label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
-					</th>
-					<td>
-						<?php AtfHtmlHelper::$field['type']($field); ?>
-					</td>
-				</tr>
-				<?php
-			}
-			?>
-
-			</tbody>
-		</table>
-
-		<?php
-
+		AtfHtmlHelper::table($this->fields);
 
 	}
 
