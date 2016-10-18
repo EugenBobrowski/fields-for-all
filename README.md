@@ -90,3 +90,14 @@ new Atf_Metabox('reviews_meta', 'Отзыв от...', 'kck_reviews', array(
 	),
 ));
 ```
+### Metabox fields args
+
+`mata_key`<br/> 
+ Default: `false`
+
+`save` <br/> 
+ Value of this field will not add to metabox data if false. <br />
+ Default: `true`
+ 
+`sanitize` <br />
+ Default: `sanitize_atf_fields`

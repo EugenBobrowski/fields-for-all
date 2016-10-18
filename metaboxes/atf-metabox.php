@@ -60,7 +60,7 @@ class Atf_Metabox
 
 		$data = get_post_meta($post->ID, $this->id, true);
 
-		AtfHtmlHelper::table($this->fields);
+		AtfHtmlHelper::table($this->fields, $data);
 
 	}
 
@@ -81,17 +81,23 @@ class Atf_Metabox
 		if (!($this->screen == $_POST['post_type'] || (is_array($this->screen) && in_array($_POST['post_type'], $this->screen))))
 			return $post_id;
 
-		/**
-		 * _newsletter
-		 *
-		 *
-		 *
-		 */
 
 		$data2save = array();
 
 		foreach ($this->fields as $key => $field) {
-			$data2save[$key] = sanitize_atf_fields($_POST[$key], $field);
+            $field = wp_parse_args($field, array(
+                'mata_key' => false,
+                'save' => true,
+                'sanitize' => 'sanitize_atf_fields',
+            ));
+
+            $data = call_user_func($field['sanitize'], $_POST[$key], $field);
+
+            if ($field['mata_key']) {
+                update_post_meta($post_id, $field['meta_key'], $data);
+            }
+
+            if ($field['save']) $data2save[$key] = $data;
 		}
 		update_post_meta($post_id, $this->id, $data2save);
 
