@@ -42,7 +42,7 @@ class Fields_For_Terms
                     <div class="form-field term-group atf-fields">
                         <label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
 
-                        <?php AtfHtmlHelper::$field['type']($field); ?>
+                        <?php  call_user_func(array('AtfHtmlHelper', $field['type'] ), $field); ?>
                     </div>
                     <?php
                     break;
@@ -80,7 +80,7 @@ class Fields_For_Terms
                     <tr class="form-field term-group-wrap atf-fields">
                         <th scope="row"><label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
                         </th>
-                        <td><?php AtfHtmlHelper::$field['type']($field); ?></td>
+                        <td><?php call_user_func(array('AtfHtmlHelper', $field['type'] ), $field); ?></td>
 
 
                     </tr>

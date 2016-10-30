@@ -133,7 +133,7 @@
                                     echo  '<tr>';
                                     echo  '<td scope="row" colspan="2" class="group-container">';
 
-                                    echo AtfHtmlHelper::$item['type']($item);
+									call_user_func(array('AtfHtmlHelper', $item['type']), $item);
 
                                     echo  '</td>';
                                     echo  '</tr>';
@@ -154,7 +154,7 @@
                                     echo  '<tr>';
                                     echo  '<th scope="row"><label for="'.$item['id'].'">'.$item['title'].'</label></th>';
                                     echo  '<td>';
-                                    echo AtfHtmlHelper::$item['type']($item);
+									call_user_func(array('AtfHtmlHelper', $item['type']), $item);
                                     echo '</td>';
                                     echo  '</tr>';
                                 }
