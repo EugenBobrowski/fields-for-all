@@ -1,8 +1,11 @@
 <?php
 
+define( 'AFT_OPTIONS_PREFIX', 'atfOptions_');
+
+
 class AtfOptionsAdmin {
 	protected $plugin_screen_hook_suffix = null;
-	protected $optionsSlug = 'atf-options';
+	protected $slug = AFT_OPTIONS_PREFIX;
 	protected static $instance = null;
 	public $optionsArray;
 

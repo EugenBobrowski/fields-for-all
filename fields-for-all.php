@@ -23,14 +23,14 @@ include_once 'options/options.php';
 
 if (is_admin() && in_array('woocommerce/woocommerce.php', apply_filters('active_plugins', get_option('active_plugins'))) && (!defined('DOING_AJAX') || !DOING_AJAX)) {
     include_once 'woo-tabs/woo-tabs.php';
-    add_action('after_setup_theme', array('Woo_Product_Data_Fields', 'get_instance'));
+    add_action('plugins_loaded', array('Woo_Product_Data_Fields', 'get_instance'));
 }
 
 /**
  * Termsmeta
  */
 include_once 'termmeta/terms-meta.php';
-add_action('after_setup_theme', array('Fields_For_Terms', 'get_instance'));
+add_action('plugins_loaded', array('Fields_For_Terms', 'get_instance'));
 //Fields_For_Terms::get_instance();
 
 /**

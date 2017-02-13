@@ -27,8 +27,8 @@
 		$sectionBody = '';
 		$active = '';
 		if (isset($_GET['page'])){
-			$activeSect = str_replace('atf-options-', '', $_GET['page']);
-			$activeSect = str_replace('atf-options', '', $activeSect);
+			$activeSect = str_replace($this->slug . '-', '', $_GET['page']);
+			$activeSect = str_replace($this->slug, '', $activeSect);
 		} else {
 			$activeSect = '';
 		}
@@ -78,8 +78,7 @@
 					<?php wp_nonce_field('update-atfOptions', 'update-atfOptions'); ?>
 					<?php
                     foreach ($this->optionsArray as $sectId => $sectValue) {
-
-                        $options = get_option(AFT_OPTIONS_PREFIX.$sectId);
+                        $options = get_option($this->slug.'_'.$sectId);
 
                         if ($activeSect == $sectId) {
                             $i++;
@@ -118,7 +117,7 @@
 
                                     $item['id'] = $itemId;
 
-                                    $item['name'] = AFT_OPTIONS_PREFIX.'['.$sectId.']['.$item['id'].']';
+                                    $item['name'] = $this->slug.'['.$sectId.']['.$item['id'].']';
 
                                     if (!isset($options[$item['id']]) && isset($item['default'])) {
                                         $item['value'] = $item['default'];
@@ -143,7 +142,7 @@
 
                                     $item['id'] = $itemId;
 
-                                    $item['name'] = AFT_OPTIONS_PREFIX.'['.$sectId.']['.$item['id'].']';
+                                    $item['name'] = $this->slug.'['.$sectId.']['.$item['id'].']';
 
                                     if (!isset($options[$item['id']]) && isset($item['default'])) {
                                         $item['value'] = $item['default'];
