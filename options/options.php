@@ -28,6 +28,8 @@ class Atf_Options {
         // Load admin style sheet and JavaScript.
         add_action('admin_enqueue_scripts', array($this, 'assets'));
 
+        add_filter('get_atf_options', array($this, 'get_options'), 10, 3);
+
     }
 
     /**
@@ -103,6 +105,28 @@ class Atf_Options {
             update_option($this->slug.'_'.$key, $value);
         }
     }
+
+    public function get_options ($atf_options, $slug, $section) {
+
+        if ($slug == $this->slug) {
+
+            $section_options = get_option($this->slug . '_' . $section);
+
+            if (!is_array($section_options)) $section_options = array();
+
+            foreach ($this->optionsArray[$section]['items'] as $itemId => $item ) {
+
+                if(!isset($section_options[$itemId]) && isset($item['default'])) {
+                    $section_options[$itemId] = $item['default'];
+                }
+            }
+
+            $atf_options[$this->slug][$section] = $section_options;
+        }
+
+        return $atf_options;
+    }
+
     public function admin_footer_text($footer = '') {
         echo '<span id="footer-thankyou"><img src="'.plugin_dir_url(__FILE__).'assets/atfdev-logo.png'.'" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>.</span>';
     }
@@ -129,26 +153,42 @@ class AtfOptions {
 	}
 }
 
-function get_atf_options($section_name) {
+function get_atf_options($slug, $section_name = null, $item = null) {
 	global $atf_options;
 
-	$options_array = get_options_array();
+    if (!is_array($atf_options)) $atf_options = array();
 
-	if (isset($atf_options[$section_name])) return $atf_options[$section_name];
+    if ($section_name === null) {
+        $section_name = $slug;
+        $slug = 'atfOptions';
+    }
 
-	$section_options = get_option(AFT_OPTIONS_PREFIX . $section_name);
+    if (!isset($atf_options[$slug][$section_name])) {
 
-	if (!is_array($section_options)) $section_options = array();
+        if ($slug == 'atfOptions') {
+            $options_array = get_options_array();
 
-	foreach ($options_array[$section_name]['items'] as $itemId => $item ) {
-		if(!isset($section_options[$itemId]) && isset($item['default'])) {
-			$section_options[$itemId] = $item['default'];
-		}
-	}
+            $section_options = get_option(AFT_OPTIONS_PREFIX . $section_name);
 
-	$section_options = apply_filters('before_return_options_from_'.$section_name, $section_options);
+            if (!is_array($section_options)) $section_options = array();
 
-	return $section_options;
+            foreach ($options_array[$section_name]['items'] as $itemId => $item ) {
+                if(!isset($section_options[$itemId]) && isset($item['default'])) {
+                    $section_options[$itemId] = $item['default'];
+                }
+            }
+            $atf_options[$slug][$section_name] = apply_filters('before_return_options_from_'.$section_name, $section_options);
+        } else {
+            $atf_options = apply_filters('get_atf_options', $atf_options, $slug, $section_name);
+            $atf_options[$slug][$section_name] = apply_filters('before_return_options_from_'.$section_name, $atf_options[$slug][$section_name]);
+        }
+
+
+    }
+
+    if ($item === null) return $atf_options[$slug][$section_name];
+
+	return $atf_options[$slug][$section_name][$item];
 }
 
 /**
