@@ -1,6 +1,7 @@
 <?php
 
-class Atf_Options {
+class Atf_Options
+{
 
     protected $plugin_screen_hook_suffix = null;
     public $slug;
@@ -10,7 +11,8 @@ class Atf_Options {
     public $optionsArray;
     public $menu_icon;
 
-    public function __construct($id, $title, $options_array) {
+    public function __construct($id, $title, $options_array)
+    {
 
         $this->slug = $id;
         $this->page_title = $title;
@@ -39,7 +41,8 @@ class Atf_Options {
      *
      * @return    null    Return early if no settings page is registered.
      */
-    public function assets() {
+    public function assets()
+    {
 
         if (!isset($this->plugin_screen_hook_suffix)) {
             return;
@@ -53,7 +56,8 @@ class Atf_Options {
         }
     }
 
-    public function add_plugin_admin_menu() {
+    public function add_plugin_admin_menu()
+    {
 
         $this->plugin_screen_hook_suffix = add_menu_page(
             $this->page_title,
@@ -64,7 +68,7 @@ class Atf_Options {
             $this->menu_icon//$icon_url,
         //$position
         );
-        foreach ($this->optionsArray as $sectID=>$section) {
+        foreach ($this->optionsArray as $sectID => $section) {
             //add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function );
             add_submenu_page($this->slug, $this->page_title, $section['name'], $this->capability, $this->slug . '-' . $sectID, array($this, 'display_plugin_admin_page'));
         }
@@ -75,38 +79,42 @@ class Atf_Options {
      *
      * @since    1.0.0
      */
-    public function display_plugin_admin_page() {
+    public function display_plugin_admin_page()
+    {
 //		$this->optionsArray = getOptionsArray();
 
         include 'admin/views/admin.php';
         add_action('admin_footer_text', array($this, 'admin_footer_text'));
     }
-    public function save_options() {
+
+    public function save_options()
+    {
 
         // Check if our nonce is set.
-        if ( ! isset( $_POST['update-atfOptions'] ) ) {
+        if (!isset($_POST['update-atfOptions'])) {
             return;
         }
 
         // Verify that the nonce is valid.
-        if ( ! wp_verify_nonce( $_POST['update-atfOptions'], 'update-atfOptions' ) ) {
+        if (!wp_verify_nonce($_POST['update-atfOptions'], 'update-atfOptions')) {
             return;
         }
 
         // Make sure that it is set.
-        if ( ! isset( $_POST[$this->slug] ) ) {
+        if (!isset($_POST[$this->slug])) {
             return;
         }
 
         $new_options_values = apply_filters('new_options_values', $_POST[$this->slug]);
 
 
-        foreach($new_options_values as $key=>$value) {
-            update_option($this->slug.'_'.$key, $value);
+        foreach ($new_options_values as $key => $value) {
+            update_option($this->slug . '_' . $key, $value);
         }
     }
 
-    public function get_options ($atf_options, $slug, $section) {
+    public function get_options($atf_options, $slug, $section)
+    {
 
         if ($slug == $this->slug) {
 
@@ -114,9 +122,9 @@ class Atf_Options {
 
             if (!is_array($section_options)) $section_options = array();
 
-            foreach ($this->optionsArray[$section]['items'] as $itemId => $item ) {
+            foreach ($this->optionsArray[$section]['items'] as $itemId => $item) {
 
-                if(!isset($section_options[$itemId]) && isset($item['default'])) {
+                if (!isset($section_options[$itemId]) && isset($item['default'])) {
                     $section_options[$itemId] = $item['default'];
                 }
             }
@@ -127,91 +135,30 @@ class Atf_Options {
         return $atf_options;
     }
 
-    public function admin_footer_text($footer = '') {
-        echo '<span id="footer-thankyou"><img src="'.plugin_dir_url(__FILE__).'assets/atfdev-logo.png'.'" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>.</span>';
+    public function admin_footer_text($footer = '')
+    {
+        echo '<span id="footer-thankyou"><img src="' . plugin_dir_url(__FILE__) . 'assets/atfdev-logo.png' . '" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>.</span>';
     }
 
 
 }
 
-/**
- * Class AtfOptions
- * @deprecated
- */
-class AtfOptions {
-	public $defaults;
-	function __construct($optionsArray){
-		$this->defaults = $optionsArray;
-	}
-	function get($sectionName) {
-		$options = get_option(AFT_OPTIONS_PREFIX.$sectionName);
-		foreach ($this->defaults[$sectionName]['items'] as $itemId => $item ) {
-			if(!isset($options[$itemId])) {
-				$options[$itemId] = $item['default'];
-			}
-		}
-	}
-}
-
-function get_atf_options($slug, $section_name = null, $item = null) {
-	global $atf_options;
+function get_atf_options($slug, $section_name = null, $item_key = null)
+{
+    global $atf_options;
 
     if (!is_array($atf_options)) $atf_options = array();
 
-    if ($section_name === null) {
-        $section_name = $slug;
-        $slug = 'atfOptions';
-    }
-
     if (!isset($atf_options[$slug][$section_name])) {
 
-        if ($slug == 'atfOptions') {
-            $options_array = get_options_array();
-
-            $section_options = get_option(AFT_OPTIONS_PREFIX . $section_name);
-
-            if (!is_array($section_options)) $section_options = array();
-
-            foreach ($options_array[$section_name]['items'] as $itemId => $item ) {
-                if(!isset($section_options[$itemId]) && isset($item['default'])) {
-                    $section_options[$itemId] = $item['default'];
-                }
-            }
-            $atf_options[$slug][$section_name] = apply_filters('before_return_options_from_'.$section_name, $section_options);
-        } else {
-            $atf_options = apply_filters('get_atf_options', $atf_options, $slug, $section_name);
-            $atf_options[$slug][$section_name] = apply_filters('before_return_options_from_'.$section_name, $atf_options[$slug][$section_name]);
-        }
-
+        $atf_options = apply_filters('get_atf_options', $atf_options, $slug, $section_name);
+        $atf_options[$slug][$section_name] = apply_filters('before_return_options_from_' . $section_name, $atf_options[$slug][$section_name]);
 
     }
 
-    if ($item === null) return $atf_options[$slug][$section_name];
+    if ($item_key === null) return $atf_options[$slug][$section_name];
 
-	return $atf_options[$slug][$section_name][$item];
+    return $atf_options[$slug][$section_name][$item_key];
 }
 
-/**
- * @param $sectionName
- *
- * @return array|mixed|void
- * @deprecated
- */
-function getAtfOptions($sectionName) {
-	return get_atf_options($sectionName);
-}
-
-function get_options_array() {
-	global $atf_options_array;
-
-	if (empty($atf_options_array)) $atf_options_array = apply_filters('get_options_array', array());
-
-	return $atf_options_array;
-}
-
-if ( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX )) {
-	require_once( plugin_dir_path( __FILE__ ) . 'admin/options_admin.php' );
-	AtfOptionsAdmin::get_instance();
-}
-
-?>
+include_once 'depricated.php';
