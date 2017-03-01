@@ -15,6 +15,15 @@ class Fields_For_Terms
 
     private function __construct()
     {
+
+        add_action('after_setup_theme', array($this, 'get_fields'));
+
+
+        add_action('created_term', array($this, 'save_term_meta'), 10, 3);
+        add_action('edited_terms', array($this, 'update_term_meta'), 10, 2);
+    }
+
+    public function get_fields() {
         $this->fields = apply_filters('meta_fields_for_terms', array());
 
         foreach ($this->fields as $taxonomy => $fields) {
@@ -22,8 +31,7 @@ class Fields_For_Terms
             add_action($taxonomy . '_add_form_fields', array($this, 'add_term_fields'), $priority, 2);
             add_action($taxonomy . '_edit_form_fields', array($this, 'edit_term_fields'), $priority, 2);
         }
-        add_action('created_term', array($this, 'save_term_meta'), 10, 3);
-        add_action('edited_terms', array($this, 'update_term_meta'), 10, 2);
+
     }
 
     public function add_term_fields($taxonomy)
