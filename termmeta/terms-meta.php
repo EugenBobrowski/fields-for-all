@@ -18,7 +18,6 @@ class Fields_For_Terms
 
         add_action('after_setup_theme', array($this, 'get_fields'));
 
-
         add_action('created_term', array($this, 'save_term_meta'), 10, 3);
         add_action('edited_terms', array($this, 'update_term_meta'), 10, 2);
     }
