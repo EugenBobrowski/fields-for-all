@@ -45,6 +45,7 @@ class Fields_For_Terms
                 default:
                     $field['id'] = $id;
                     $field['name'] = $id;
+                    if (isset($field['default'])) $field['value'] = $field['default'];
                     ?>
                     <div class="form-field term-group atf-fields">
                         <label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
@@ -72,17 +73,13 @@ class Fields_For_Terms
                         <th scope="row" colspan="2">
                             <h3><?php echo $field['title'];?></h3>
                         </th>
-
-
                     </tr>
                     <?php
-                    echo '<h4>' . $field['title'] . '</h4>';
                     break;
                 default:
                     $field['id'] = $id;
                     $field['name'] = $id;
                     $field['value'] = get_term_meta($term->term_id, $id, true);
-
                     ?>
                     <tr class="form-field term-group-wrap atf-fields">
                         <th scope="row"><label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
