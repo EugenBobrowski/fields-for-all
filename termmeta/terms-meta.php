@@ -99,14 +99,17 @@ class Fields_For_Terms
     public function save_term_meta($term_id, $tt_id, $taxonomy)
     {
         require_once plugin_dir_path(__FILE__) . '../atf-fields/htmlhelper.php';
-        AtfHtmlHelper::assets('f4a-' . $taxonomy);
+//        AtfHtmlHelper::assets('f4a-' . $taxonomy);
 
         if (!isset($this->fields[$taxonomy])) return;
 
         foreach ($this->fields[$taxonomy] as $id => $field) {
             if (isset($_POST[$id])) {
-                $value = sanitize_atf_fields($_POST[$id], $field['type']);
-                update_option('test_f4a', array($term_id, $id, $value));
+                if (isset($field['sanitize']))
+                    $value = (is_callable($field['sanitize'])) ? call_user_func($field['sanitize'], $_POST[$id]) : $_POST[$id];
+                else
+                    $value = sanitize_atf_fields($_POST[$id], $field['type']);
+
                 add_term_meta($term_id, $id, $value, true);
             }
         }
@@ -123,7 +126,14 @@ class Fields_For_Terms
         foreach ($this->fields[$taxonomy] as $id => $field) {
 
             if (isset($_POST[$id])) {
-                $value = sanitize_atf_fields($_POST[$id], $field['type']);
+
+                if (isset($field['sanitize'])) {
+                    $value = (is_callable($field['sanitize'])) ? call_user_func($field['sanitize'], $_POST[$id]) : $_POST[$id];
+                } else {
+                    $value = sanitize_atf_fields($_POST[$id], $field['type']);
+                }
+
+
 
                 update_term_meta($term_id, $id, $value);
 
