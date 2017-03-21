@@ -54,3 +54,41 @@ new Atf_Metabox('reviews_meta', 'Отзыв от...', 'kck_reviews', array(
  
 `sanitize` <br />
  Default: `sanitize_atf_fields`
+ 
+ 
+ 
+## Woocommerce metabox tabs
+
+
+## Term meta fields
+
+```php
+add_filter('meta_fields_for_terms', 'add_product_cat_terms_meta');
+
+function add_product_cat_terms_meta($terms_meta)
+{
+    // adding meta fields for taxonomy "product_cat"
+        
+    if (!isset($terms_meta['product_cat']) || !is_array($terms_meta['product_cat'])) $terms_meta['product_cat'] = array();
+    $terms_meta['product_cat'] = array_merge(array(
+        array(
+            'title' => 'Дополнительно',
+            'type' => 'title',
+        ),
+        'front_img' => array(
+            'title' => 'Изображение для главной',
+            'type' => 'media',
+            'desc' => '568x418'
+        ),
+        //another fields
+
+    ), $terms_meta['product_cat']);
+
+    return $terms_meta;
+}
+
+```
+
+
+## Users meta fields
+
