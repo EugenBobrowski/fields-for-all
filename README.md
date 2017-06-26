@@ -3,72 +3,25 @@
 ## Options Page
 
 ```php
-add_filter('get_options_array', 'getOptionsArray' );
-function getOptionsArray() {
-    return array (
-        //atfOptions_general
-        'section1' => array(
-            'name' => 'General Settings',
-            'desc' => __('General settings'),
+new Atf_Options('atfOptions', __('Theme Options'), array(
+    //atfOptions_general
+    'general' => array(
+        'name' => 'Настройки сайта',
+        'desc' => __('General settings'),
 
-            'items' => array(
-                'logo' => array(
-                    'type' => 'addMedia',
-                    'title' => __('Header Logotype image', 'atf'),
-                    'default' => get_template_directory_uri().'/assets/img/logo.png',
-                ),
-                'itemsInLine' => array(
-                    'type' => 'textField',
-                    'title' => __('Items in line', 'atf'),
-                    'default' => '3', // AtfOptions_homePage[items][thumb_width][default]
-                ),
-                'hide_empty' => array(
-                    'type' => 'onOffBox',
-                    'title' => __('Hide empty category', 'atf'),
-                    'default' => 'true',
-                ),
-                                
-                array(
-                    'type' => 'title',
-                    'title' => 'Phones Group Title'
-                ),
-                                
-                'phones' => array(
-                    'type' => 'group',
-                    'title' => 'Список телефонов',
-                    'default' => array(
-                        array(
-                            'phone' => '044 575 11 33',
-                            'address' => 'Ул. Гмыри, 1а/4, кв. 43',
-                        ),
-                        array(
-                            'phone' => '048 234 13 83',
-                            'address' => 'Ул. Фонтанская Дорога, 135',
-                        ),
-                    ),
-                    'items' => array(
-                        'phone' => array(
-                            'title' => __('Phone', 'robotstxt-rewrite'),
-                            'type' => 'text',
-                            'desc' => __('Relative path of WordPress installation directory', 'robotstxt-rewrite'),
-                        ),
-                        'address' => array(
-                            'title' => __('Address', 'robotstxt-rewrite'),
-                            'type' => 'text',
-                            'desc' => __('Relative path of WordPress installation directory', 'robotstxt-rewrite'),
-                        ),
-                    ),
-
-                ),
-                'copyright' => array(
-                    'type' => 'editor',
-                    'title' => __('Copyright'),
-                    'default' => '© 2016 KCK illumination  |  Все права защищены'
-                ),
+        'items' => array(
+            'favicon' => array(
+                'type' => 'addMedia',
+                'title' => __('Favicon', 'atf'),
+                'default' => get_template_directory_uri() . '/assets/img/logo.png',
+                'desc' => 'The optimal size for an image is 16x16'
             ),
+            //another fields
         ),
-    );
-}
+    ),
+    //another sections
+    ));
+        
 ```
 
 
@@ -101,3 +54,41 @@ new Atf_Metabox('reviews_meta', 'Отзыв от...', 'kck_reviews', array(
  
 `sanitize` <br />
  Default: `sanitize_atf_fields`
+ 
+ 
+ 
+## Woocommerce metabox tabs
+
+
+## Term meta fields
+
+```php
+add_filter('meta_fields_for_terms', 'add_product_cat_terms_meta');
+
+function add_product_cat_terms_meta($terms_meta)
+{
+    // adding meta fields for taxonomy "product_cat"
+        
+    if (!isset($terms_meta['product_cat']) || !is_array($terms_meta['product_cat'])) $terms_meta['product_cat'] = array();
+    $terms_meta['product_cat'] = array_merge(array(
+        array(
+            'title' => 'Дополнительно',
+            'type' => 'title',
+        ),
+        'front_img' => array(
+            'title' => 'Изображение для главной',
+            'type' => 'media',
+            'desc' => '568x418'
+        ),
+        //another fields
+
+    ), $terms_meta['product_cat']);
+
+    return $terms_meta;
+}
+
+```
+
+
+## Users meta fields
+
