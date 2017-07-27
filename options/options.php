@@ -158,6 +158,8 @@ function get_atf_options($slug, $section_name = null, $item_key = null)
 
     if ($item_key === null) return $atf_options[$slug][$section_name];
 
+    if (!isset($atf_options[$slug][$section_name][$item_key])) return null;
+
     return $atf_options[$slug][$section_name][$item_key];
 }
 
