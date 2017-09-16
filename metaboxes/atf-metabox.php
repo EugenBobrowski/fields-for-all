@@ -60,7 +60,7 @@ class Atf_Metabox
 
 		$data = get_post_meta($post->ID, $this->id, true);
 
-		AtfHtmlHelper::table($this->fields, $data);
+		AtfHtmlHelper::table($this->fields, $data, array('name_prefix' => $this->id));
 
 	}
 
@@ -91,7 +91,7 @@ class Atf_Metabox
                 'sanitize' => 'sanitize_atf_fields',
             ));
 
-            $data = call_user_func($field['sanitize'], $_POST[$key], $field);
+            $data = call_user_func($field['sanitize'], $_POST[$this->id][$key], $field);
 
             if ($field['mata_key']) {
                 update_post_meta($post_id, $field['meta_key'], $data);
