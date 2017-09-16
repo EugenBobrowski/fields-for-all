@@ -37,3 +37,4 @@ add_action('plugins_loaded', array('Fields_For_Terms', 'get_instance'));
  * Atf Metaboxes
  */
 include_once 'metaboxes/atf-metabox.php';
+include_once 'metaboxes/cmb2-legacy.php';
