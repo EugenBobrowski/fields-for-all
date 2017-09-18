@@ -106,4 +106,8 @@ class Atf_Metabox
         return true;
     }
 
+    public function add_fields ($fields) {
+        $this->fields = array_merge($this->fields, $fields);
+    }
+
 }

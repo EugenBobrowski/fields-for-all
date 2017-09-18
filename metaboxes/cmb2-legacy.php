@@ -15,9 +15,25 @@ class Atf_Metabox_CMB2_Legacy extends Atf_Metabox
     {
         $id = $this->remove_prefix($args['id']);
 
-
         $args['title'] = $args['name'];
         unset($args['name']);
+
+        switch ($args['type']) {
+            case 'radio_inline':
+                $args['type'] = 'radio';
+                $args['vertical'] = false;
+                $args['buttons'] = true;
+                break;
+            case 'multicheck_inline':
+                $args['type'] = 'checkbox';
+                $args['vertical'] = false;
+                $args['buttons'] = true;
+                break;
+            case 'tax_dropdown':
+                $args['type'] = 'select';
+                break;
+
+        }
 
 
         $this->fields[$id] = $args;
@@ -37,8 +53,6 @@ class Atf_Metabox_CMB2_Legacy extends Atf_Metabox
         if (strpos($id, $this->prefix) !== 0) return $id;
 
         $id = substr($id, $this->prefix_len);
-
-        var_dump($id);
 
         return $id;
     }
