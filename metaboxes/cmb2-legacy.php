@@ -35,6 +35,10 @@ class Atf_Metabox_CMB2_Legacy extends Atf_Metabox
 
         }
 
+        if (!empty($args['show_option_none'])) {
+            $args['options'] = array('' => __('None')) + $args['options'];
+        }
+
 
         $this->fields[$id] = $args;
     }
