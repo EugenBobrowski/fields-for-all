@@ -14,9 +14,10 @@ class Atf_Metabox_CMB2_Legacy extends Atf_Metabox
     public function add_field($args)
     {
         $id = $this->remove_prefix($args['id']);
-
-        $args['title'] = $args['name'];
-        unset($args['name']);
+        if (!isset($args['title'])) {
+            $args['title'] = $args['name'];
+            unset($args['name']);
+        }
 
         switch ($args['type']) {
             case 'radio_inline':
