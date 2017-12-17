@@ -12,7 +12,7 @@ define( 'AFT_OPTIONS_PREFIX', 'atfOptions_');
 /**
  * @param $sectionName
  *
- * @return array|mixed|void
+ * @return array|mixed
  * @deprecated
  */
 function getAtfOptions($sectionName) {
