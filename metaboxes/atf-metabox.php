@@ -33,12 +33,10 @@ class Atf_Metabox
 
         add_action('load-post.php', array($this, 'init'));
         add_action('load-post-new.php', array($this, 'init'));
-
     }
 
     public function init()
     {
-
         add_action('admin_enqueue_scripts', array($this, 'assets'));
         add_action('add_meta_boxes', array($this, 'add_metabox'));
         add_action('save_post', array($this, 'metabox_save'));
@@ -87,6 +85,10 @@ class Atf_Metabox
         $data2save = array();
 
         foreach ($this->fields as $key => $field) {
+        	if (
+        		$field['type'] == 'title' ||
+	            !isset($_POST[$this->id][$key])
+	        ) continue;
             $field = wp_parse_args($field, array(
                 'mata_key' => false,
                 'save' => true,
