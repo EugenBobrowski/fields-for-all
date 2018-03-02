@@ -6,15 +6,15 @@
 new Atf_Options('atfOptions', __('Theme Options'), array(
     //atfOptions_general
     'general' => array(
-        'name' => 'Настройки сайта',
-        'desc' => __('General settings'),
+        'name' => __('General settings', 'your_extension'),
+        'desc' => __('General settings description', 'your_extension'),
 
         'items' => array(
             'favicon' => array(
                 'type' => 'addMedia',
-                'title' => __('Favicon', 'atf'),
+                'title' => __('Favicon', 'your_extension'),
                 'default' => get_template_directory_uri() . '/assets/img/logo.png',
-                'desc' => 'The optimal size for an image is 16x16'
+                'desc' => __('The optimal size for an image is 16x16', 'your_extension'),
             ),
             //another fields
         ),
@@ -30,15 +30,15 @@ new Atf_Options('atfOptions', __('Theme Options'), array(
 ```php
 new Atf_Metabox('reviews_meta', 'Отзыв от...', 'kck_reviews', array(
 	'name' => array(
-		'title' => 'Имя',
+		'title' => __('Name', 'your_extension'),
 		'type' => 'text',
 	),
 	'position' => array(
-		'title' => 'Должность',
+		'title' => __('Position', 'your_extension'),
 		'type' => 'text',
 	),
 	'logo' => array(
-		'title' => 'Лого',
+		'title' => __('Photo', 'your_extension'),
 		'type' => 'media'
 	),
 ));
@@ -72,11 +72,11 @@ function add_product_cat_terms_meta($terms_meta)
     if (!isset($terms_meta['product_cat']) || !is_array($terms_meta['product_cat'])) $terms_meta['product_cat'] = array();
     $terms_meta['product_cat'] = array_merge(array(
         array(
-            'title' => 'Дополнительно',
+            'title' => __('Additional data', 'your_extension'),
             'type' => 'title',
         ),
         'front_img' => array(
-            'title' => 'Изображение для главной',
+            'title' => __('Term image', 'your_extension'),
             'type' => 'media',
             'desc' => '568x418'
         ),
