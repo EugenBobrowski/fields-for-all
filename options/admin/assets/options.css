@@ -50,6 +50,7 @@
   width: 200px;
   display: table-cell;
   vertical-align: top;
+  padding: 0 0 80px 0;
 }
 .options-panel .sections-section .sections-list ul {
   list-style: none;
@@ -93,7 +94,7 @@
 }
 .options-panel .sections-section .sections-body .one-section-body {
   display: none;
-  padding: 20px 20px 60px 20px;
+  padding: 20px 20px 80px 20px;
 }
 .options-panel .sections-section .sections-body .one-section-body.active {
   display: block;
@@ -101,158 +102,21 @@
 .options-panel .sections-section .sections-body table.form-table th h3 {
   margin: 0;
 }
-.options-panel .sections-section .submit {
+.options-panel .sections-section .submit-panel {
   position: absolute;
+  text-align: right;
 }
-.options-panel .sections-section .submit.bottom {
+.options-panel .sections-section .submit-panel.bottom {
   bottom: 0;
   right: 0;
+  left: 0;
   padding: 20px;
   margin: 0;
-  border-radius: 5px;
   background: #ddd;
 }
-.atf-fields .radio-image label {
-  display: block;
-  padding: 5px;
-  text-align: center;
-  float: left;
-  border: 1px solid transparent;
-}
-.atf-fields .radio-image label.checked {
-  background: #eee;
-  border: 1px solid #FDADAD;
-}
-.atf-fields .radio-image label:hover {
-  background: #eee;
-}
-.atf-fields .radio-image label span {
-  display: block;
-}
-.atf-fields .radio-image input[type='radio'] {
-  display: none;
-}
-.atf-fields .radio-image img {
-  border: 5px solid #eee;
-  height: 70px;
-}
-.atf-fields .on-off-box {
-  display: inline-block;
-  position: relative;
-  height: 30px;
-  width: 60px;
-  border-radius: 15px;
-  background-color: #FF6347;
-  vertical-align: middle;
-  -webkit-transition: background-color 2s ease;
-  transition: background-color 2s ease;
-}
-.atf-fields .on-off-box input {
-  display: none;
-}
-.atf-fields .on-off-box.on {
-  background-color: #6AA772;
-  -webkit-transition: background-color 2s ease;
-  transition: background-color 2s ease;
-}
-.atf-fields .on-off-box.on .tumbler {
-  left: 32px;
-  -webkit-transition: left 1s ease;
-  transition: left 1s ease;
-}
-.atf-fields .on-off-box.on .text.on {
-  opacity: 1;
-}
-.atf-fields .on-off-box.on .text.off {
-  opacity: 0;
-}
-.atf-fields .on-off-box .tumbler {
-  display: block;
-  position: absolute;
-  left: 2px;
-  top: 2px;
-  background-color: #fff;
-  height: 26px;
-  width: 26px;
-  border-radius: 50%;
-  -webkit-transition: left 1s ease;
-  transition: left 1s ease;
-}
-.atf-fields .on-off-box .text {
-  display: block;
-  position: absolute;
-  color: #fff;
-  width: 30px;
-  height: 26px;
-  line-height: 26px;
-  top: 2px;
-  text-align: center;
-  -webkit-transition: opacity 2s ease;
-  transition: opacity 2s ease;
-}
-.atf-fields .on-off-box .text.on {
-  left: 2px;
-  opacity: 0;
-}
-.atf-fields .on-off-box .text.off {
-  right: 2px;
-  opacity: 1;
-}
-.atf-fields .google-webfonts .demotext {
-  padding: 25px;
-  margin: 20px 0;
-  background: #eeeeee;
-}
-.atf-fields .uploader .atf-options-upload-screenshot {
-  max-width: 75%;
-  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-  -webkit-box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.1), inset 0 0 0 1px rgba(0, 0, 0, 0.05);
-  background: #eeeeee;
-}
-.atf-fields .group-container {
-  padding: 0;
-}
-.atf-fields .atf-options-group {
-  padding: 0;
-}
-.atf-fields .atf-options-group th {
-  padding: 10px;
-  text-align: center;
-  width: auto;
-}
-.atf-fields .atf-options-group .group-row-id {
-  width: 30px;
-  text-align: center;
-  background: #eee;
-}
-.atf-fields .atf-options-group th,
-.atf-fields .atf-options-group td {
-  border: 1px solid #ddd;
-  vertical-align: top;
-}
-.atf-fields .atf-options-group .row .atf-options-upload-screenshot {
-  max-height: 150px;
-}
-.atf-fields .atf-options-group .group-row-controls {
-  background: #eee;
-  padding: 2px;
-  width: 40px;
-}
-.atf-fields .atf-options-group .btn-control-group {
-  border: 1px solid #ddd;
-  display: inline-block;
-  background: #fff;
-  padding: 6px 10px;
-  width: 32px;
-  height: 32px;
-  text-align: center;
-  border-radius: 50%;
-  text-decoration: none;
-  font-weight: 100;
-  margin: 2px;
-}
-.atf-fields .atf-options-group .btn-control-group.minus {
-  background: #ff6347;
-  color: #ffffff;
-  border-color: #ffffff;
+.options-panel .sections-section .submit-panel.fixed {
+  position: fixed;
+  bottom: 0;
+  border-radius: 5px 5px 0 0;
+  z-index: 1;
 }

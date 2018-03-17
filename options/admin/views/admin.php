@@ -172,7 +172,7 @@
                     }
 
                     ?>
-					<div class="submit bottom">
+					<div class="bottom submit-panel">
 						<input type="submit" class="button-primary" value="<?php _e('Save Changes') ?>" />
 					</div>
 				</form>

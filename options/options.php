@@ -53,6 +53,8 @@ class Atf_Options
         if ($atfOptionsIs !== false) {
             include_once plugin_dir_path(__FILE__) . '../atf-fields/htmlhelper.php';
             AtfHtmlHelper::assets();
+            wp_enqueue_style('f4a-options', plugin_dir_url(__FILE__) . 'admin/assets/options.css', array('atf-fields-css'));
+            wp_enqueue_script('f4a-options', plugin_dir_url(__FILE__) . 'admin/assets/options.js', array('jquery'));
         }
     }
 

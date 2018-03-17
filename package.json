@@ -1,0 +1,16 @@
+{
+  "name": "atfHtmlHelter",
+  "version": "1.0.1",
+  "description": "",
+  "devDependencies": {
+	"grunt": "~0.4.5",
+	"grunt-contrib-less": "~0.11.0",
+	"grunt-contrib-watch": "~0.6.1"
+  },
+  "main": "Gruntfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "ATF",
+  "license": "GPL-2"
+}
