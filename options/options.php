@@ -139,7 +139,7 @@ class Atf_Options
 
     public function admin_footer_text($footer = '')
     {
-        echo '<span id="footer-thankyou"><img src="' . plugin_dir_url(__FILE__) . 'assets/atfdev-logo.png' . '" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>.</span>';
+        echo '<span id="footer-thankyou"><img src="' . plugin_dir_url(__FILE__) . 'admin/assets/atfdev-logo.png' . '" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>.</span>';
     }
 
 
