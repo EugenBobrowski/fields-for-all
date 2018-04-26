@@ -165,4 +165,6 @@ function get_atf_options($slug, $section_name = null, $item_key = null)
     return $atf_options[$slug][$section_name][$item_key];
 }
 
+add_filter('get_atf_options', 'wp_unslash');
+
 include_once 'depricated.php';
