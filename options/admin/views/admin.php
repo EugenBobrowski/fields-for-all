@@ -106,6 +106,10 @@
 
                             foreach ( $sectValue['items'] as $itemId => $item ) {
 
+	                            $item['id'] = $sectId . '_' . $itemId;
+
+	                            $item['name'] = $this->slug.'['.$sectId.']['.$item['id'].']';
+
                                 if ($item['type'] == 'title') {
 
                                     echo  '<tr>';
@@ -113,11 +117,6 @@
                                     echo  '</tr>';
 
                                 } elseif ($item['type'] == 'group') {
-
-
-                                    $item['id'] = $itemId;
-
-                                    $item['name'] = $this->slug.'['.$sectId.']['.$item['id'].']';
 
                                     if (!isset($options[$item['id']]) && isset($item['default'])) {
                                         $item['value'] = $item['default'];
@@ -139,10 +138,6 @@
 
 
                                 } else {
-
-                                    $item['id'] = $itemId;
-
-                                    $item['name'] = $this->slug.'['.$sectId.']['.$item['id'].']';
 
                                     if (!isset($options[$item['id']]) && isset($item['default'])) {
                                         $item['value'] = $item['default'];
