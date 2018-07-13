@@ -121,7 +121,9 @@ class Atf_Options
         if ($slug == $this->slug) {
 
             $section_options = get_option($this->slug . '_' . $section);
-
+			if ($section == 'header') {
+				var_dump($section_options);
+			}
             if (!is_array($section_options)) $section_options = array();
 
             foreach ($this->optionsArray[$section]['items'] as $itemId => $item) {
@@ -133,6 +135,7 @@ class Atf_Options
 
             $atf_options[$this->slug][$section] = $section_options;
         }
+
 
         return $atf_options;
     }

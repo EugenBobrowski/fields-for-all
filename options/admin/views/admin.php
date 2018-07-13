@@ -108,7 +108,7 @@
 
 	                            $item['id'] = $sectId . '_' . $itemId;
 
-	                            $item['name'] = $this->slug.'['.$sectId.']['.$item['id'].']';
+	                            $item['name'] = $this->slug.'['.$sectId.']['.$itemId.']';
 
                                 if ($item['type'] == 'title') {
 
@@ -118,10 +118,10 @@
 
                                 } elseif ($item['type'] == 'group') {
 
-                                    if (!isset($options[$item['id']]) && isset($item['default'])) {
+                                    if (!isset($options[$itemId]) && isset($item['default'])) {
                                         $item['value'] = $item['default'];
                                     } else {
-                                        $item['value'] = $options[$item['id']];
+                                        $item['value'] = $options[$itemId];
                                     }
 
                                     echo  '<tr><th scope="row" colspan="2">';
@@ -139,18 +139,18 @@
 
                                 } else {
 
-                                    if (!isset($options[$item['id']]) && isset($item['default'])) {
+                                    if (!isset($options[$itemId]) && isset($item['default'])) {
                                         $item['value'] = $item['default'];
                                     } else {
-                                        $item['value'] = $options[$item['id']];
+                                        $item['value'] = $options[$itemId];
                                     }
 
                                     echo  '<tr>';
-                                    echo  '<th scope="row"><label for="'.$item['id'].'">'.$item['title'].'</label></th>';
+                                    echo  '<th scope="row"><label for="'.$itemId.'">'.$item['title'].'</label></th>';
                                     echo  '<td>';
 									call_user_func(array('AtfHtmlHelper', $item['type']), $item);
                                     echo '</td>';
-                                    echo  '</tr>';
+                                    echo '</tr>';
                                 }
                             }
 
