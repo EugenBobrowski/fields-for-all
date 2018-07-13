@@ -142,7 +142,7 @@ class Atf_Options
 
     public function admin_footer_text($footer = '')
     {
-        echo '<span id="footer-thankyou"><img src="' . plugin_dir_url(__FILE__) . 'assets/atfdev-logo.png' . '" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>.</span>';
+        echo '<span id="footer-thankyou"><img src="' . plugin_dir_url(__FILE__) . 'admin/assets/atfdev-logo.png' . '" style="height: 50px;vertical-align: middle;" > Created by <a href="http://atf.li" >ATF</a>.</span>';
     }
 
 
@@ -167,5 +167,7 @@ function get_atf_options($slug, $section_name = null, $item_key = null)
 
     return $atf_options[$slug][$section_name][$item_key];
 }
+
+add_filter('get_atf_options', 'wp_unslash');
 
 include_once 'depricated.php';

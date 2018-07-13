@@ -107,10 +107,13 @@ class Woo_Product_Data_Fields
 
                 foreach ($fields as $key => $tab) {
 
-                    echo '<div id="' . $key . '" class="panel woocommerce_options_panel wc_cpdf_tab atf-fields"><div class="options_group">';
+                    echo '<div id="' . $key . '" class="panel woocommerce_options_panel wc_cpdf_tab atf-fields">'.
+                         '<div class="options_group">';
 
-                    foreach ($tab['items'] as $field) {
-                        self::wc_product_data_field($field);
+                    foreach ($tab['items'] as $field_id=>$field) {
+                        if (!isset($fields['id'])) $field['id'] = $field_id;
+                        if (!isset($fields['label'])) $field['label'] = $field['title'];
+                        $this->wc_product_data_field($field);
                     }
 
                     echo '</div>';
@@ -152,7 +155,7 @@ class Woo_Product_Data_Fields
         }
         echo '<p class="form-field _weight_field ">';
         echo '<label for="' . esc_attr($field['id']) . '">' . $field['label'] . '</label>';
-        AtfHtmlHelper::$field['type']($field) ;
+        call_user_func(array('AtfHtmlHelper', $field['type']), $field);
 
         if (!empty($field['description'])) {
 
