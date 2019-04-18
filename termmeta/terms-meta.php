@@ -108,7 +108,7 @@ class Fields_For_Terms
                 if (isset($field['sanitize']))
                     $value = (is_callable($field['sanitize'])) ? call_user_func($field['sanitize'], $_POST[$id]) : $_POST[$id];
                 else
-                    $value = sanitize_atf_fields($_POST[$id], $field['type']);
+                    $value = sanitize_atf_fields($_POST[$id], $field);
 
                 add_term_meta($term_id, $id, $value, true);
             }
@@ -130,10 +130,8 @@ class Fields_For_Terms
                 if (isset($field['sanitize'])) {
                     $value = (is_callable($field['sanitize'])) ? call_user_func($field['sanitize'], $_POST[$id]) : $_POST[$id];
                 } else {
-                    $value = sanitize_atf_fields($_POST[$id], $field['type']);
+                    $value = sanitize_atf_fields($_POST[$id], $field);
                 }
-
-
 
                 update_term_meta($term_id, $id, $value);
 
