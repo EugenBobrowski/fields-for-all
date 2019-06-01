@@ -47,7 +47,7 @@ class Woo_Product_Data_Fields
     }
     public function wc_tabs_n_fields () {
         add_action('woocommerce_product_write_panel_tabs', array($this, 'product_write_panel_tab'));
-        add_action('woocommerce_product_write_panels', array($this, 'product_write_panel'));
+        add_action('woocommerce_product_data_panels', array($this, 'product_write_panel'));
 
         include_once plugin_dir_path(__FILE__) . '../atf-fields/htmlhelper.php';
         add_action('admin_enqueue_scripts', array('AtfHtmlHelper', 'assets'));
