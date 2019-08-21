@@ -79,7 +79,7 @@ class Fields_For_Terms
                 default:
                     $field['id'] = $id;
                     $field['name'] = $id;
-                    $field['value'] = get_term_meta($term->term_id, $id, true);
+                    $field['value'] = $this->get_field_value($term->term_id, $field);
                     ?>
                     <tr class="form-field term-group-wrap atf-fields">
                         <th scope="row"><label for="<?php echo $field['id']; ?>"><?php echo $field['title'] ?></label>
@@ -94,6 +94,26 @@ class Fields_For_Terms
 
 
         }
+    }
+
+    public function get_field_value ($term_id, $field) {
+
+	    $meta = get_term_meta($term_id, $field['id'], true);
+
+	    if (!empty($meta)) {
+	        return $meta;
+        }
+
+	    $meta = get_term_meta($term_id, $field['id'], false);
+
+	    $default = (isset($field['default'])) ? $field['default'] : '';
+
+	    if (count($meta) === 0) {
+	        return $default;
+        } else {
+	        return array_shift($meta);
+        }
+
     }
 
     public function save_term_meta($term_id, $tt_id, $taxonomy)
