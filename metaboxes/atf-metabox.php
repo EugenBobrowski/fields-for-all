@@ -11,6 +11,7 @@ class Atf_Metabox
     public $id;
     public $title;
     public $screen;
+    public $display_options;
     /**
      * @var string advanced | normal | side. The context within the screen where the boxes should display. Available contexts vary from screen to screen. Post edit screen contexts include 'normal', 'side', and 'advanced'. Comments screen contexts include 'normal' and 'side'. Menus meta boxes (accordion sections) all use the 'side' context. Global
      * @default value: 'advanced'
@@ -24,11 +25,18 @@ class Atf_Metabox
 
     public $fields;
 
-    public function __construct($id, $title, $screen, $fields)
+    public function __construct($id, $title, $screen, $fields )
     {
         $this->id = $id;
         $this->title = $title;
-        $this->screen = $screen;
+	    $this->screen = $screen;
+	    $this->display_options = array(
+		    'page_template' => '',
+	    );
+        if (is_array($screen)) {
+	        $this->screen = $screen['screen'];
+	        $this->display_options = wp_parse_args($screen, $this->display_options);
+        }
         $this->fields = $fields;
 
         add_action('load-post.php', array($this, 'init'));
@@ -50,6 +58,15 @@ class Atf_Metabox
 
     public function add_metabox()
     {
+	    global $post;
+
+    	if (
+    		!empty($this->display_options['page_template']) &&
+		    $this->display_options['page_template'] !== get_post_meta( $post->ID, '_wp_page_template', true )
+	    ) {
+		    return;
+	    }
+
         add_meta_box($this->id, $this->title, array($this, 'metabox_callback'), $this->screen, 'normal', 'high');
     }
 
