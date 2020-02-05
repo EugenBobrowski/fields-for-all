@@ -67,7 +67,7 @@ class Atf_Metabox
 		    return;
 	    }
 
-        add_meta_box($this->id, $this->title, array($this, 'metabox_callback'), $this->screen, $this->context, 'high');
+        add_meta_box($this->id, $this->title, array($this, 'metabox_callback'), $this->screen, $this->context, $this->priority);
     }
 
     public function metabox_callback($post)
