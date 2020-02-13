@@ -122,6 +122,8 @@ class Atf_Metabox
         }
         update_post_meta($post_id, $this->id, $data2save);
 
+        do_action($this->id . '_metabox_saved', $post_id);
+
         return true;
     }
 
