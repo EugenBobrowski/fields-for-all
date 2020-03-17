@@ -67,7 +67,7 @@ class Atf_Metabox
 		    return;
 	    }
 
-        add_meta_box($this->id, $this->title, array($this, 'metabox_callback'), $this->screen, 'normal', 'high');
+        add_meta_box($this->id, $this->title, array($this, 'metabox_callback'), $this->screen, $this->context, $this->priority);
     }
 
     public function metabox_callback($post)
@@ -121,6 +121,8 @@ class Atf_Metabox
             if ($field['save']) $data2save[$key] = $data;
         }
         update_post_meta($post_id, $this->id, $data2save);
+
+        do_action($this->id . '_metabox_saved', $post_id);
 
         return true;
     }
