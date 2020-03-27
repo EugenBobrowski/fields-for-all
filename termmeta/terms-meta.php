@@ -130,6 +130,7 @@ class Fields_For_Terms
                 else
                     $value = sanitize_atf_fields($_POST[$id], $field);
 
+                do_action('f4a_update_term_meta', $term_id, $id, $value);
                 add_term_meta($term_id, $id, $value, true);
             }
         }
@@ -152,7 +153,7 @@ class Fields_For_Terms
                 } else {
                     $value = sanitize_atf_fields($_POST[$id], $field);
                 }
-
+	            do_action( 'f4a_update_term_meta', $term_id, $id, $value );
                 update_term_meta($term_id, $id, $value);
 
             }
