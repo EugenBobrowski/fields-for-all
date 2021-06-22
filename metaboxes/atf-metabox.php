@@ -60,9 +60,10 @@ class Atf_Metabox
     {
 	    global $post;
 
-    	if (
-    		!empty($this->display_options['page_template']) &&
-		    $this->display_options['page_template'] !== get_post_meta( $post->ID, '_wp_page_template', true )
+	    if (
+		    ( ! empty( $this->display_options['page_template'] ) && ! is_array( $this->display_options['page_template'] ) &&
+		      $this->display_options['page_template'] !== get_post_meta( $post->ID, '_wp_page_template', true ) )
+		    || ( is_array( $this->display_options['page_template'] ) && ! in_array( get_post_meta( $post->ID, '_wp_page_template', true ), $this->display_options['page_template'] ) )
 	    ) {
 		    return;
 	    }
